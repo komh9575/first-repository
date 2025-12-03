@@ -1,0 +1,739 @@
+
+
+SELECT COUNT(*)
+FROM `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+LIMIT 5;
+
+
+SELECT
+  'InvoiceNo' AS column_name,
+  COUNTIF(InvoiceNo IS NULL) AS missing_values_count
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+HAVING
+  COUNTIF(InvoiceNo IS NULL) > 0
+UNION ALL
+SELECT
+  'StockCode' AS column_name,
+  COUNTIF(StockCode IS NULL) AS missing_values_count
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+HAVING
+  COUNTIF(StockCode IS NULL) > 0
+UNION ALL
+SELECT
+  'Description' AS column_name,
+  COUNTIF(Description IS NULL) AS missing_values_count
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+HAVING
+  COUNTIF(Description IS NULL) > 0
+UNION ALL
+SELECT
+  'Quantity' AS column_name,
+  COUNTIF(Quantity IS NULL) AS missing_values_count
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+HAVING
+  COUNTIF(Quantity IS NULL) > 0
+UNION ALL
+SELECT
+  'InvoiceDate' AS column_name,
+  COUNTIF(InvoiceDate IS NULL) AS missing_values_count
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+HAVING
+  COUNTIF(InvoiceDate IS NULL) > 0
+UNION ALL
+SELECT
+  'UnitPrice' AS column_name,
+  COUNTIF(UnitPrice IS NULL) AS missing_values_count
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+HAVING
+  COUNTIF(UnitPrice IS NULL) > 0
+UNION ALL
+SELECT
+  'CustomerID' AS column_name,
+  COUNTIF(CustomerID IS NULL) AS missing_values_count
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+HAVING
+  COUNTIF(CustomerID IS NULL) > 0
+UNION ALL
+SELECT
+  'Country' AS column_name,
+  COUNTIF(Country IS NULL) AS missing_values_count
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+HAVING
+  COUNTIF(Country IS NULL) > 0;
+
+
+SELECT
+  'InvoiceNo' AS column_name,
+  ROUND(SUM(CASE
+        WHEN InvoiceNo IS NULL THEN 1
+        ELSE 0
+    END
+      ) / COUNT(*) * 100, 2) AS missing_percentage
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+UNION ALL
+SELECT
+  'StockCode' AS column_name,
+  ROUND(SUM(CASE
+        WHEN StockCode IS NULL THEN 1
+        ELSE 0
+    END
+      ) / COUNT(*) * 100, 2) AS missing_percentage
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+UNION ALL
+SELECT
+  'Description' AS column_name,
+  ROUND( SUM(CASE
+        WHEN Description IS NULL THEN 1
+        ELSE 0
+    END
+      ) / COUNT(*) * 100, 2) AS missing_percentage
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+UNION ALL
+SELECT
+  'Quantity' AS column_name,
+  ROUND(SUM(CASE
+        WHEN Quantity IS NULL THEN 1
+        ELSE 0
+    END
+      ) / COUNT(*) * 100, 2) AS missing_percentage
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+UNION ALL
+SELECT
+  'InvoiceDate' AS column_name,
+  ROUND( SUM(CASE
+        WHEN InvoiceDate IS NULL THEN 1
+        ELSE 0
+    END
+      ) / COUNT(*) * 100, 2) AS missing_percentage
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+UNION ALL
+SELECT
+  'UnitPrice' AS column_name,
+  ROUND(SUM(CASE
+        WHEN UnitPrice IS NULL THEN 1
+        ELSE 0
+    END
+      ) / COUNT(*) * 100, 2) AS missing_percentage
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+UNION ALL
+SELECT
+  'CustomerID' AS column_name,
+  ROUND(SUM(CASE
+        WHEN CustomerID IS NULL THEN 1
+        ELSE 0
+    END
+      ) / COUNT(*) * 100, 2) AS missing_percentage
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+UNION ALL
+SELECT
+  'Country' AS column_name,
+  ROUND(SUM(CASE
+        WHEN Country IS NULL THEN 1
+        ELSE 0
+    END
+      ) / COUNT(*) * 100, 2) AS missing_percentage
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`;
+
+
+
+SELECT
+  DISTINCT t.Description
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data` AS t
+WHERE
+  t.StockCode = '85123A';
+
+
+DELETE
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+WHERE
+  InvoiceNo IS NULL
+  OR InvoiceNo = ''
+  OR StockCode IS NULL
+  OR StockCode = ''
+  OR Description IS NULL
+  OR Description = ''
+  OR Quantity IS NULL
+  OR UnitPrice IS NULL
+  OR CustomerID IS NULL
+  OR Country IS NULL
+  OR Country = '';
+
+SELECT SUM(count_of_rows - 1) AS count_of_duplicate_rows 
+  FROM ( SELECT InvoiceNo, StockCode, Description, Quantity, InvoiceDate, UnitPrice, CustomerID, Country, 
+  COUNT(*) AS count_of_rows FROM coastal-sanctum-479903-f7.modulabs_project.data 
+  GROUP BY InvoiceNo, StockCode, Description, Quantity, InvoiceDate, UnitPrice, CustomerID, Country 
+  HAVING COUNT(*) > 1 ) AS subquery;
+
+
+CREATE OR REPLACE TABLE
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data` AS
+SELECT
+  DISTINCT *
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`;
+
+
+SELECT
+  COUNT(DISTINCT t.InvoiceNo) AS count_of_unique_invoiceno
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data` AS t;
+
+
+SELECT
+  DISTINCT InvoiceNo
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+LIMIT
+  100;
+
+
+
+SELECT
+  InvoiceNo,
+  StockCode,
+  Description,
+  Quantity,
+  InvoiceDate,
+  UnitPrice,
+  CustomerID,
+  Country
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+WHERE
+  InvoiceNo LIKE 'C%'
+LIMIT
+  100;
+
+
+SELECT
+  COUNT(DISTINCT t1.StockCode)
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data` AS t1;
+
+
+SELECT
+  StockCode,
+  COUNT(*) AS sell_cnt
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+GROUP BY
+  StockCode
+ORDER BY
+  sell_cnt DESC
+LIMIT
+  10;
+
+WITH
+  UniqueStockCodes AS (
+  SELECT
+    DISTINCT StockCode
+  FROM
+    `coastal-sanctum-479903-f7`.`modulabs_project`.`data` )
+SELECT
+  LENGTH(StockCode) - LENGTH(REGEXP_REPLACE(StockCode, r'[0-9]', '')) AS number_count,
+  COUNT(*) AS stock_cnt
+FROM
+  `UniqueStockCodes`
+GROUP BY
+  number_count
+ORDER BY
+  COUNT(*) DESC;
+
+
+SELECT
+  DISTINCT StockCode,
+  number_count
+FROM (
+  SELECT
+    StockCode,
+    LENGTH(StockCode) - LENGTH(REGEXP_REPLACE(StockCode, r'[0-9]', '')) AS number_count
+  FROM
+    `coastal-sanctum-479903-f7`.`modulabs_project`.`data` )
+WHERE
+  number_count <= 1;
+
+
+SELECT
+  t.StockCode,
+  ROUND( COUNT(t.StockCode) * 100.0 / (
+    SELECT
+      COUNT(*)
+    FROM
+      `coastal-sanctum-479903-f7`.`modulabs_project`.`data` ), 2) AS percentage
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data` AS t
+WHERE
+  t.StockCode IN ('POST',
+    'M',
+    'C2',
+    'D',
+    'BANK CHARGES',
+    'PADS')
+GROUP BY
+  t.StockCode
+ORDER BY
+  t.StockCode;
+
+
+SELECT
+  StockCode
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+WHERE
+  StockCode IN ('BANK CHARGES',
+    'C2',
+    'D',
+    'M',
+    'PADS',
+    'POST');
+
+DELETE FROM `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
+WHERE StockCode IN ('BANK CHARGES', 'C2', 'D', 'M', 'PADS', 'POST');
+
+
+
+SELECT
+  Description, COUNT(*) AS count_of_description
+FROM
+  `coastal-sanctum-479903-f7`.`modulabs_project`.`data` AS t1
+GROUP BY
+  Description
+ORDER BY
+  COUNT(Description) DESC
+LIMIT
+  30;
+
+
+DELETE
+FROM `coastal-sanctum-479903-f7.modulabs_project.data`
+WHERE LOWER(description) LIKE '%next day carriage%'
+   OR LOWER(description) LIKE '%high resolution image%'
+   OR LOWER(description) LIKE '%delivery%'
+   OR LOWER(description) LIKE '%shipping%'
+   OR LOWER(description) LIKE '%service%';
+
+CREATE OR REPLACE TABLE `coastal-sanctum-479903-f7.modulabs_project.data` AS
+SELECT
+  * EXCEPT (Description),
+  UPPER(Description) AS Description
+FROM `coastal-sanctum-479903-f7.modulabs_project.data`; 
+
+
+SELECT 
+  MIN(UnitPrice) AS min_price,
+  MAX(UnitPrice) AS max_price,
+  AVG(UnitPrice) AS avg_price
+FROM `coastal-sanctum-479903-f7.modulabs_project.data`; 
+
+
+SELECT 
+  COUNT(*) AS cnt_quantity,
+  MIN(Quantity) AS min_quantity,
+  MAX(Quantity) AS max_quantity,
+  AVG(Quantity) AS avg_quantity
+FROM `coastal-sanctum-479903-f7.modulabs_project.data`
+WHERE UnitPrice = 0;
+
+CREATE OR REPLACE TABLE `coastal-sanctum-479903-f7.modulabs_project.data` AS 
+SELECT *
+FROM `coastal-sanctum-479903-f7.modulabs_project.data`
+WHERE UnitPrice <> 0;
+
+SELECT 
+  DATE(InvoiceDate) AS InvoiceDay,InvoiceDate
+FROM `coastal-sanctum-479903-f7.modulabs_project.data`;
+
+
+
+SELECT 
+   MAX(DATE(InvoiceDate)) AS most_recent_date
+FROM `coastal-sanctum-479903-f7.modulabs_project.data`;
+
+
+SELECT 
+    CustomerID,
+    MAX(DATE(InvoiceDate)) AS InvoiceDay
+FROM `coastal-sanctum-479903-f7.modulabs_project.data`
+GROUP BY CustomerID;
+
+SELECT
+  CustomerID, 
+  EXTRACT(DAY FROM MAX(InvoiceDay) OVER () - InvoiceDay) AS recency
+FROM (
+  SELECT 
+    CustomerID,
+    MAX(DATE(InvoiceDate)) AS InvoiceDay
+  FROM `coastal-sanctum-479903-f7.modulabs_project.data`
+  GROUP BY CustomerID
+);
+
+CREATE OR REPLACE TABLE `coastal-sanctum-479903-f7.modulabs_project.user_r` AS
+SELECT *
+FROM `coastal-sanctum-479903-f7.modulabs_project.data`
+
+
+SELECT
+  CustomerID,
+  COUNT(DISTINCT InvoiceNo) AS purchase_cnt
+FROM `coastal-sanctum-479903-f7.modulabs_project.data`
+GROUP BY CustomerID;
+
+SELECT
+  CustomerID,
+  SUM(Quantity) AS item_cnt
+FROM `coastal-sanctum-479903-f7.modulabs_project.data`
+GROUP BY CustomerID;
+
+
+CREATE OR REPLACE TABLE `coastal-sanctum-479903-f7.modulabs_project.user_rf` AS
+
+WITH purchase_cnt AS (
+  SELECT
+    CustomerID,
+    COUNT(DISTINCT InvoiceNo) AS purchase_cnt
+  FROM `coastal-sanctum-479903-f7.modulabs_project.data`
+  GROUP BY CustomerID
+),
+
+item_cnt AS (
+  SELECT
+    CustomerID,
+    SUM(Quantity) AS item_cnt
+  FROM `coastal-sanctum-479903-f7.modulabs_project.data`
+  GROUP BY CustomerID
+)
+
+SELECT
+  pc.CustomerID,
+  pc.purchase_cnt,
+  ic.item_cnt,
+FROM purchase_cnt AS pc
+JOIN item_cnt AS ic
+  ON pc.CustomerID = ic.CustomerID
+JOIN `coastal-sanctum-479903-f7.modulabs_project.user_r` AS ur
+  ON pc.CustomerID = ur.CustomerID;
+
+
+SELECT
+  CustomerID,
+  ROUND(SUM(UnitPrice * Quantity), 1) AS user_total
+FROM `coastal-sanctum-479903-f7.modulabs_project.data`
+GROUP BY CustomerID;
+
+CREATE OR REPLACE TABLE `coastal-sanctum-479903-f7.modulabs_project.user_rfm` AS   
+SELECT
+  rf.CustomerID AS CustomerID,
+  rf.purchase_cnt,
+  rf.item_cnt,
+  ut.user_total,
+  ROUND(ut.user_total / rf.purchase_cnt, 1) AS user_average
+FROM `coastal-sanctum-479903-f7.modulabs_project.user_rf` rf
+LEFT JOIN (
+
+  SELECT
+    CustomerID,
+    ROUND(SUM(UnitPrice * Quantity), 1) AS user_total
+  FROM `coastal-sanctum-479903-f7.modulabs_project.data`
+  GROUP BY CustomerID
+) ut
+ON rf.CustomerID = ut.CustomerID;
+
+
+SELECT *
+FROM `coastal-sanctum-479903-f7.modulabs_project.user_rfm`;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
