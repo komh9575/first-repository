@@ -1,4 +1,4 @@
-
+# https://console.cloud.google.com/bigquery?sq=792054626338:56064c13ae794650a550b4595004b28b 
 
 SELECT COUNT(*)
 FROM `coastal-sanctum-479903-f7`.`modulabs_project`.`data`
